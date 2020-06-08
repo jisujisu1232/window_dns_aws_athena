@@ -15,8 +15,7 @@ $results | Export-Csv -NoTypeInformation c:\temp\DNSRecords.csv -Append
 ## AWS Athena
 - AWS S3 Bucket
     - Upload DNSRecords.csv
-- Athena
-    - DDL
+- Athena DDL
 ```
 CREATE EXTERNAL TABLE IF NOT EXISTS {TABLE_NAME} (
   zonename string,
@@ -33,7 +32,7 @@ WITH SERDEPROPERTIES (
 LOCATION 's3://{BUCKET_NAME}/{FOLDER_PATH}/'
 TBLPROPERTIES ("skip.header.line.count"="1");
 ```
-    - Select Example
+- Select Example
 ```
 select
   concat(hostname,'.',zonename) as full_domain,
@@ -50,9 +49,9 @@ where
 	'{IP N}'
   )
 ```
-    - Using athena.py
-        - pip install boto3
-        - line 63 ~ 70
+- Using athena.py
+    - pip install boto3
+    - line 63 ~ 70
 ```
 client_args['region_name']='ap-northeast-2'
 client_args['aws_access_key_id']='{ACCESS KEY}'
@@ -63,7 +62,7 @@ TABLE='{TABLE}'
 ATHENA_S3='{QUERY_SAVE_BUCKET}'
 ATHENA_S3_PREFIX= '{PREFIX}'
 ```
-        - python athena.py {ip 1},{ip 2},...,{ip N}
+    - python athena.py {ip 1},{ip 2},...,{ip N}
 
 
 
